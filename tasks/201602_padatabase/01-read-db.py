@@ -16,27 +16,20 @@ df['full_address'] = df['address1'] + ' ' + df['city'] + ', ' + df['state'] + ' 
 
 addressList = df['full_address'].tolist()
 
-from geopy.geocoders import Nominatim
+from geopy.geocoders import Nominatim #Replace with Google or some other better geocoder
 geolocator = Nominatim()
 
 geocodes = []
-
-
 
 for i in addressList:
 	try:
 		print i
 		temp = []
 		location = geolocator.geocode(i)
-		# #lat = location.latitude
-		# #lon = location.longitude
 		temp.append(i)
-		# print location.latitude
-		# print location.longitude
 		temp.append(location)
-		# #temp.append(location.longitude)
 		geocodes.append(temp)
-		time.sleep(2)
+		time.sleep(0.01)
 		print location
 	except:
 		print 'except'
@@ -44,7 +37,7 @@ for i in addressList:
 
 print geocodes
 
-dfg = DataFrame(geocodes)
+dfg = pd.DataFrame(geocodes)
 
 ouCSV = wd+'data/processing/geocodes.csv'
 dfg.to_csv(ouCSV)
